@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{51D8EE40-4282-49FC-B94B-B4543DFE9035}</ProjectGuid>
     <TargetFramework>net472</TargetFramework>
@@ -15,7 +15,7 @@
     <ExportDir>bin\Publish</ExportDir>
   </PropertyGroup>
   
-  <Import Project="LocalBuildProperties.props" Condition="Exists('LocalBuildProperties.props')"/>
+  <Import Project="LocalBuildProperties.props" Condition="Exists('LocalBuildProperties.props')" />
   
   <ItemGroup>
     <None Remove="Resources\**\*.png" />
@@ -31,6 +31,9 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>$(HollowKnightRefs)\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="DebugMod">
+      <HintPath>$(HollowKnightRefs)\Mods\DebugMod\DebugMod.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>$(HollowKnightRefs)\MMHOOK_Assembly-CSharp.dll</HintPath>
@@ -110,15 +113,15 @@
   </Target>
     
   <Target Name="CreateReleaseZip" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
-     <RemoveDir Directories="$(ExportDir)/$(TargetName)/" />
+    <RemoveDir Directories="$(ExportDir)/$(TargetName)/" />
     <MakeDir Directories="$(ExportDir)/$(TargetName)/" />
     <MakeDir Directories="$(ExportDir)/$(TargetName)/zip/" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ExportDir)/$(TargetName)/" />
     <Copy SourceFiles="..\README.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/$(TargetName)/zip/" />
     <ZipDirectory SourceDirectory="$(ExportDir)/$(TargetName)/zip/" DestinationFile="$(ExportDir)/$(TargetName)/$(TargetName).zip" />
-	
+  
     <GetFileHash Files="$(ExportDir)/$(TargetName)/$(TargetName).zip" Algorithm="SHA256">
-	  <Output TaskParameter="Items" ItemName="FilesWithHashes" />
+    <Output TaskParameter="Items" ItemName="FilesWithHashes" />
     </GetFileHash>
     <Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
     <WriteLinesToFile File="$(ExportDir)/$(TargetName)/metadata/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Overwrite="true" Encoding="UTF-8" />
