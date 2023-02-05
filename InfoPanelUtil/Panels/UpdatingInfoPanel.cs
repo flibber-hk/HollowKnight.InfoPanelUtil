@@ -46,7 +46,7 @@ namespace InfoPanelUtil.Panels
         }
         public string GetText() => _text;
 
-        public UpdatingInfoPanel(string Name, bool showBackground = true) : base(Name, showBackground)
+        private UpdatingInfoPanel(string Name, bool showBackground = true) : base(Name, showBackground)
         {
             this.AddInfo(10f, 10f, 20f, "", GetText);
         }
